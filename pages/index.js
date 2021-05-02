@@ -58,6 +58,7 @@ export default function Home() {
                     {chatlist.map((item, key) =>(
                         <ChatList 
                           key={key}
+                          data={item}
                           active={activeChat.chatId === chatlist[key].chatId}
                           onClick={()=>setActiveChat(chatlist[key])}
                         

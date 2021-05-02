@@ -1,0 +1,53 @@
+.chatWindow{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.chatWindow_header{
+    height: 60px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chatWindow_header_info{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: row;
+}
+.ChatWindow_avatar{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.chatWindow_name{
+    font-size: 17px;
+    color: #000;
+}
+.chatWindow_headerbuttons{
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+}
+.chatWindow_btn{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap:5px;
+}
+.chatWindow_body{
+    flex: 1;
+    overflow-y: auto;
+    background-color: #E5DDD5;
+    background-size: cover;
+    background-position: center;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+}
+
