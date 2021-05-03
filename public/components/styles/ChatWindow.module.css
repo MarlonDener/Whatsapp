@@ -40,7 +40,8 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    gap:5px;
+    overflow: hidden;
+    transition: all ease 0.3s;
 }
 .chatWindow_body{
     flex: 1;
@@ -51,3 +52,47 @@
     background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
 }
 
+.chatWindow_footer{
+    height: 62px;
+    display: flex;
+    align-items: center;
+}
+
+.chatWindow_pre{
+    display: flex;
+    margin: 0 12px;
+}
+.chatWindow_pos{
+    display: flex;
+    margin: 0 18px;
+}
+.chatWindow_inputarea{
+    flex: 1;
+}
+.chatWindow_input{
+    width: 100%;
+    height: 40px;
+    border:0;
+    outline: 0;
+    background-color: #fff;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #4A4A4A;
+    padding-left: 15px;
+}
+
+.emojiArea{
+    height: 200px;
+    width: 100%;
+    overflow-y: hidden;
+    transition: all ease 0.3s;
+}
+
+aside.emoji-picker-react {
+width: auto;
+background: none;
+}
+
+.emoji-picker-react .emoji-group:before{
+    background: none;
+}
