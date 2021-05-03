@@ -106,7 +106,6 @@ const ChatWindow = ({user}) => {
                                 <MoreVertIcon style={{color:'#919191'}}/>
                         </div>
                     </div>
-
             </div>
 
             <div ref={body} className={styles.chatWindow_body}> 

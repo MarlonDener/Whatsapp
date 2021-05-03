@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import ChatList from '../public/components/ChatListItem'
 import ChatIntro from '../public/components/ChatIntro'
 import ChatWindow from '../public/components/ChatWindow'
+import NewChat from '../public/components/NewChat'
 
 import DonutLargeIcon from '@material-ui/icons/DonutLarge'
 import ChatIcon from '@material-ui/icons/Chat'
@@ -26,6 +27,12 @@ export default function Home() {
     avatar:'https://www.w3schools.com/howto/img_avatar2.png',
     name: 'MarlonDener'
   });
+  
+  const [showNewChat, setShowNewChat] = useState(false);
+
+  const openNewChat = () =>{
+    setShowNewChat(true);
+  }
 
   return (
     <div className={styles.container}>
@@ -38,6 +45,13 @@ export default function Home() {
       <main className={styles.app_window}>
           <div className={styles.sidebar}>
 
+            <NewChat 
+             chatlist={chatlist}
+             user={user}
+             show={showNewChat}
+             setShow={setShowNewChat} 
+            />
+
             <header className={styles.header}>
                 
                  <img className={styles.header_avatar} src={user.avatar} alt="" />
@@ -45,7 +59,11 @@ export default function Home() {
                  <div className={styles.header_buttons}>
                    <div className={styles.header_btn}>
                       <DonutLargeIcon style={{color:'#919191'}} />
-                      <ChatIcon className={styles.space_icon} style={{color:'#919191'}} />
+                      <ChatIcon className={styles.space_icon} style={{color:'#919191'}}
+                       
+                       onClick={openNewChat}
+
+                      />
                       <MoreVertIcon style={{color:'#919191'}} />
                    </div>
                  </div>
