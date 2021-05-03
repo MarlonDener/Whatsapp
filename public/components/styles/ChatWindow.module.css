@@ -33,7 +33,7 @@
     margin-right: 25px;
 }
 .chatWindow_btn{
-    width: 40px;
+    width: 100px;
     height: 40px;
     border-radius: 50%;
     display: flex;
@@ -44,6 +44,7 @@
     transition: all ease 0.4s;
 }
 .chatWindow_body{
+    padding: 20px 30px;
     flex: 1;
     overflow-y: auto;
     background-color: #E5DDD5;
@@ -86,13 +87,22 @@
     width: 100%;
     overflow-y: hidden;
     transition: all ease 0.3s;
-}
-
-aside.emoji-picker-react {
-width: auto;
-background: none;
-}
-
-.emoji-picker-react .emoji-group:before{
+  }
+  
+  aside.emoji-picker-react {
+  width: auto;
+  background: none;
+  }
+  
+  .emoji-picker-react .emoji-group:before{
     background: none;
-}
+  }
+
+  .chatWindow_body::-webkit-scrollbar{
+    width: 8px;
+    height: 6px;
+  }
+  
+  .chatWindow_body::-webkit-scrollbar-thumb{
+    background-color: #4104867c;
+  }

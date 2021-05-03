@@ -1,5 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
+import MessageItem from './MessageItem'
+
 import Picker from 'emoji-picker-react';
+
 {/* Icones */}
 import SearchIcon from '@material-ui/icons/Search'
 import AttachIcon from '@material-ui/icons/AttachFile'
@@ -12,7 +15,9 @@ import MicIcon from '@material-ui/icons/Mic'
 {/*Estilo */}
 import styles from './styles/ChatWindow.module.css'
 
-export default () => {
+const ChatWindow = ({user}) => {
+
+    const body = useRef();
 
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -22,7 +27,7 @@ export default () => {
 
     const [emojiOpen, setEmojiOpen] = useState(false);
 
-    const handleEmojiClick = (e, emojiObject) =>{
+    const onEmojiClick = (e, emojiObject) =>{
             setText(text + emojiObject.emoji);
     }
     const openEmoji = () => {
@@ -53,6 +58,32 @@ export default () => {
     }
     const [text, setText] = useState('');
     const [listening, setListening] = useState(false);
+    const [list, setList] = useState([
+        {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234},
+        {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        , {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        , {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        , {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        , {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        , {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        , {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        , {body:'mensagem1',autor:123}
+        ,{body:'mensagem2',autor:1234}
+        ,{body:'mensagem3',autor:123}]);
+        
+        useEffect(()=>{ 
+            if(body.current.scrollHeight > body.current.offsetHeight){
+                body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
+            }
+        },[list]);
 
     return(
         <div className={styles.chatWindow}>
@@ -68,7 +99,7 @@ export default () => {
                         
                     </div>
 
-                    <div className={styles.chatWindow_headerbuttons}>
+                  <div className={styles.chatWindow_headerbuttons}>
                         <div className={styles.chatWindow_btn}>
                                 <SearchIcon style={{color:'#919191'}}/>
                                 <AttachIcon style={{color:'#919191'}}/>
@@ -78,15 +109,25 @@ export default () => {
 
             </div>
 
-            <div className={styles.chatWindow_body}></div>
+            <div ref={body} className={styles.chatWindow_body}> 
 
-                <div className={styles.emojiArea} style={{height: emojiOpen ? '200px' : '0px'}}>  
+                    {list.map((item, key)=>(
+                        <MessageItem 
+                        key={key}
+                        data={item}
+                        user={user}
+                         />
+                    ))}
+
+            </div> 
+        
+                <div className={styles.emojiArea} style={{height: emojiOpen ? '300px' : '0px'}}>  
                     <Picker 
-                    onEmojiClick={handleEmojiClick}
+                     onEmojiClick={onEmojiClick}
                     disableSearchBar
                     disableSkinTonePicker   
                     />
-                </div>
+                </div>     
 
             <div className={styles.chatWindow_footer}>
                 
@@ -133,3 +174,5 @@ export default () => {
         </div>
     );
 }
+
+export default ChatWindow;

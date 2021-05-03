@@ -21,6 +21,11 @@ export default function Home() {
     {chatId: 4, title:'Marcio Souza', image:'https://www.w3schools.com/howto/img_avatar2.png'}
 ]);
   const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] = useState({
+    id:1234,
+    avatar:'https://www.w3schools.com/howto/img_avatar2.png',
+    name: 'MarlonDener'
+  });
 
   return (
     <div className={styles.container}>
@@ -35,7 +40,7 @@ export default function Home() {
 
             <header className={styles.header}>
                 
-                 <img className={styles.header_avatar} src="https://www.w3schools.com/howto/img_avatar2.png" alt="" />
+                 <img className={styles.header_avatar} src={user.avatar} alt="" />
 
                  <div className={styles.header_buttons}>
                    <div className={styles.header_btn}>
@@ -71,7 +76,9 @@ export default function Home() {
            {/* Starting part to message*/}             
           <div className={styles.contentArea}>
             {activeChat.chatId !== undefined &&
-            <ChatWindow />
+            <ChatWindow 
+             user={user} 
+            />
             }
             {activeChat.chatId == undefined &&
             <ChatIntro />
