@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
-import styles from './styles/ChatWindow.module.css'
-
 import Picker from 'emoji-picker-react';
-
+{/* Icones */}
 import SearchIcon from '@material-ui/icons/Search'
 import AttachIcon from '@material-ui/icons/AttachFile'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
@@ -10,6 +8,9 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon'
 import CloseIcon from '@material-ui/icons/Close'
 import SendIcon from '@material-ui/icons/Send'
 import MicIcon from '@material-ui/icons/Mic'
+
+{/*Estilo */}
+import styles from './styles/ChatWindow.module.css'
 
 export default () => {
 
@@ -36,6 +37,7 @@ export default () => {
     }
 
     const handleMicClick = () =>{
+
         if(recognition !== null){
             recognition.onstart = () =>{
                    setListening(true); 
@@ -78,13 +80,13 @@ export default () => {
 
             <div className={styles.chatWindow_body}></div>
 
-            <div className={styles.emojiArea} style={{height: emojiOpen ? '200px' : '0px'}}>  
-                <Picker 
-                 onEmojiClick={handleEmojiClick}
-                 disableSearchBar
-                 disableSkinTonePicker   
-                />
-            </div>
+                <div className={styles.emojiArea} style={{height: emojiOpen ? '200px' : '0px'}}>  
+                    <Picker 
+                    onEmojiClick={handleEmojiClick}
+                    disableSearchBar
+                    disableSkinTonePicker   
+                    />
+                </div>
 
             <div className={styles.chatWindow_footer}>
                 
@@ -111,10 +113,11 @@ export default () => {
                         
                         />
                     </div>
+
                     <div className={styles.chatWindow_pos}>
                        {text === '' && 
                        <div onClick={handleMicClick} className={styles.chatWindow_btn}>
-                                    <MicIcon style={{color:listening? '#126ece' :'#919191'}}/>
+                                    <MicIcon style={{color:listening? '#126ecd' :'#919191'}}/>
                         </div>
                         }
                         {text !== '' &&

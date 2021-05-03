@@ -41,7 +41,7 @@
     align-items: center;
     cursor: pointer;
     overflow: hidden;
-    transition: all ease 0.3s;
+    transition: all ease 0.4s;
 }
 .chatWindow_body{
     flex: 1;
