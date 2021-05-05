@@ -1,0 +1,25 @@
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login button{
+    background-color: rgb(53, 53, 204);
+    border: none;
+    outline: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    color:#fff;
+    border-radius: 5px 5px 0px 5px;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px 3px rgba(0, 0, 0, 0.151);
+    transition: all ease 0.3s;
+}
+.login button:hover{
+    background: rgb(14, 14, 172);
+    border: 3px solid rgba(255,255,255,0.6);
+    padding: 18px 31px;
+    
+}

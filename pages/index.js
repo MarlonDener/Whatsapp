@@ -3,6 +3,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+import ApiFirebase from '../src/ApiFirebase'
+
+import Login from '../public/components/Login'
 import ChatList from '../public/components/ChatListItem'
 import ChatIntro from '../public/components/ChatIntro'
 import ChatWindow from '../public/components/ChatWindow'
@@ -15,24 +18,42 @@ import SearchIcon from '@material-ui/icons/Search'
 
 export default function Home() {
 
-  const [chatlist, setChatList] = useState([
-    {chatId: 1, title:'Marlon Dener', image:'https://www.w3schools.com/howto/img_avatar2.png'},
-    {chatId: 2, title:'Dener', image:'https://www.w3schools.com/howto/img_avatar2.png'},
-    {chatId: 3, title:'Michael Bastos', image:'https://www.w3schools.com/howto/img_avatar2.png'},
-    {chatId: 4, title:'Marcio Souza', image:'https://www.w3schools.com/howto/img_avatar2.png'}
-]);
+  const [chatlist, setChatList] = useState([]);
   const [activeChat, setActiveChat] = useState({});
   const [user, setUser] = useState({
-    id:1234,
-    avatar:'https://www.w3schools.com/howto/img_avatar2.png',
-    name: 'MarlonDener'
-  });
-  
+    id:'TOFsn9iFbOYFSfdVjIfA8WgwCmm1',
+    name:'marlon',
+    avatar:'https://graph.facebook.com/3761201050672731/picture'
+  })
   const [showNewChat, setShowNewChat] = useState(false);
 
   const openNewChat = () =>{
     setShowNewChat(true);
   }
+
+  const VoltarInfoDoUserLogado = async (u) =>{
+    let newUser = {
+      id:u.uid,
+      name:u.displayName,
+      avatar: u.photoURL
+    };
+
+    await ApiFirebase.addUser(newUser);
+
+    setUser(newUser);
+  }
+
+  if(user == null){
+      return (<Login onReceive={VoltarInfoDoUserLogado} />)
+  }
+
+  useEffect(() =>{
+    if(user !== null){
+      let unsub = ApiFirebase.onChatList(user.id, setChatList);
+      return unsub;
+    } 
+  }, [user]);
+
 
   return (
     <div className={styles.container}>
@@ -95,7 +116,8 @@ export default function Home() {
           <div className={styles.contentArea}>
             {activeChat.chatId !== undefined &&
             <ChatWindow 
-             user={user} 
+             user={user}
+             data={activeChat} 
             />
             }
             {activeChat.chatId == undefined &&

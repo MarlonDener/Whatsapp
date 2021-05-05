@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react'
 import MessageItem from './MessageItem'
+import ApiFirebase from '../../src/ApiFirebase'
 
-import Picker from 'emoji-picker-react';
+//import Picker from 'emoji-picker-react';
 
 {/* Icones */}
 import SearchIcon from '@material-ui/icons/Search'
@@ -15,7 +16,8 @@ import MicIcon from '@material-ui/icons/Mic'
 {/*Estilo */}
 import styles from './styles/ChatWindow.module.css'
 
-const ChatWindow = ({user}) => {
+//user | usuarios -- e a data informações do perfil que puxa do index.js
+const ChatWindow = ({user, data}) => {
 
     const body = useRef();
 
@@ -36,9 +38,18 @@ const ChatWindow = ({user}) => {
     const closeEmoji = () =>{
         setEmojiOpen(false);
     }
+    const InputKeyUp = (e) =>{
+        if(e.keyCode == 13){
+            handleSendClick();
+        }
+    }
 
     const handleSendClick = () =>{
-        console.log('ok')
+        if(text != ''){
+            ApiFirebase.SendMessage(data, user.id, 'text', text);
+            setText('');
+            setEmojiOpen(false);
+        }
     }
 
     const handleMicClick = () =>{
@@ -58,32 +69,25 @@ const ChatWindow = ({user}) => {
     }
     const [text, setText] = useState('');
     const [listening, setListening] = useState(false);
-    const [list, setList] = useState([
-        {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234},
-        {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        , {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        , {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        , {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        , {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        , {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        , {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        , {body:'mensagem1',autor:123}
-        ,{body:'mensagem2',autor:1234}
-        ,{body:'mensagem3',autor:123}]);
+    const [list, setList] = useState([]);
+    
         
         useEffect(()=>{ 
             if(body.current.scrollHeight > body.current.offsetHeight){
                 body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
             }
         },[list]);
+
+
+        useEffect(() =>{
+
+            setList([]);
+
+            let unsub = ApiFirebase.ConteudoDoChat(data.chatId, setList);
+            return unsub;
+
+        },[data.chatId]); 
+
 
     return(
         <div className={styles.chatWindow}>
@@ -92,10 +96,10 @@ const ChatWindow = ({user}) => {
 
                     <div className={styles.chatWindow_header_info}>
                         <div className={styles.image}>
-                            <img className={styles.ChatWindow_avatar} src="https://www.w3schools.com/howto/img_avatar2.png" alt="avatar" />
+                            <img className={styles.ChatWindow_avatar} src={data.image} alt="avatar" />
                         </div>
 
-                        <div className={styles.chatWindow_name}>Marlon Dener</div> 
+                        <div className={styles.chatWindow_name}>{data.title}</div> 
                         
                     </div>
 
@@ -120,7 +124,7 @@ const ChatWindow = ({user}) => {
 
             </div> 
         
-                <div className={styles.emojiArea} style={{height: emojiOpen ? '300px' : '0px'}}>  
+            {/*    <div className={styles.emojiArea} style={{height: emojiOpen ? '300px' : '0px'}}>  
                     <Picker 
                      onEmojiClick={onEmojiClick}
                     disableSearchBar
@@ -128,6 +132,7 @@ const ChatWindow = ({user}) => {
                     />
                 </div>     
 
+                 */}
             <div className={styles.chatWindow_footer}>
                 
                     <div className={styles.chatWindow_pre}> 
@@ -149,7 +154,8 @@ const ChatWindow = ({user}) => {
                         <input type="text" className={styles.chatWindow_input} 
                          placeholder="Digite uma mensagem" 
                          value={text}
-                         onChange={e=>setText(e.target.value)}  
+                         onChange={e=>setText(e.target.value)} 
+                         onKeyUp={InputKeyUp} 
                         
                         />
                     </div>

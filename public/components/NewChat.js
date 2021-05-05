@@ -1,18 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './styles/NewChat.module.css'
+
+import ApiFirebase from '../../src/ApiFirebase'
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const NewChat = ({user, chatlist, show, setShow}) =>{
 
     const [list, setList] = useState([
-        {id:123, avatar: 'https://www.w3schools.com/howto/img_avatar2.png', name:'Lima santos'},
-        {id:123, avatar: 'https://www.w3schools.com/howto/img_avatar2.png', name:'Lima santos'},
-        {id:123, avatar: 'https://www.w3schools.com/howto/img_avatar2.png', name:'Marcia santos'}
     ]);
+
+    useEffect(() => {
+        const getList = async () =>{
+            if(user !== null){
+                let results = await ApiFirebase.getContactList(user.id);
+                setList(results);
+            }
+        }
+        getList();
+    },[user])
 
     const handleClose = () =>{
         setShow(false);
+    }
+
+    const addNewChat = async(user2) =>{
+        await ApiFirebase.addNewChat(user, user2);
+
+        handleClose();
     }
 
     return(
@@ -32,7 +47,7 @@ const NewChat = ({user, chatlist, show, setShow}) =>{
 
             <div className={styles.newChat_list}>
                     {list.map((item,key) => (
-                        <div className={styles.newChat_item} key={key}>
+                        <div onClick={() => addNewChat(item)} className={styles.newChat_item} key={key}>
                              <img src={item.avatar} alt={item.key} className={styles.newChat_itemavatar} />
                              <div className={styles.newChat_itemname}>{item.name}</div>   
                         </div>
